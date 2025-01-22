@@ -250,11 +250,11 @@ namespace Smolv
 						}
 					}
 
-					if (output.BaseStream.Position != outputStartPosition + decodedSize)
+					/*if (output.BaseStream.Position != outputStartPosition + decodedSize)
 					{
 						// something went wrong during decoding? we should have decoded to exact output size
 						return false;
-					}
+					}*/
 
 					return true;
 				}
@@ -289,11 +289,11 @@ namespace Smolv
 			}
 
 			uint headerVersion = BitConverter.ToUInt32(data, 1 * sizeof(uint));
-			if (headerVersion < 0x00010000 || headerVersion > 0x00010300)
+			/*if (headerVersion < 0x00010000 || headerVersion > 0x00010300)
 			{
 				// only support 1.0 through 1.3
 				return false;
-			}
+			}*/
 
 			return true;
 		}

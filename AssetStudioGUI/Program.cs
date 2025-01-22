@@ -11,7 +11,6 @@ namespace AssetStudioGUI
             AssetsManager assetsManager = new AssetsManager();
             assetsManager.LoadFiles("D:\\Projects\\simplevulkanhap\\entry-default-signed\\resources\\rawfile\\Data\\tuanjie default resources");
 
-
             foreach (SerializedFile file in assetsManager.assetsFileList)
             {
                 Console.WriteLine("File asset name: " + file.fullName + "\nTuanjie Version: " + file.unityVersion);
@@ -20,8 +19,9 @@ namespace AssetStudioGUI
                 foreach (AssetStudio.Object asset in file.Objects)
                 {
                     // Going for the assets containing shaders
-                    if (asset is Shader)
+                    if (asset is Shader shader)
                     {
+                        ShaderConverter.Convert(shader);
                         Console.WriteLine("Clap you hands");
                     }
                 }

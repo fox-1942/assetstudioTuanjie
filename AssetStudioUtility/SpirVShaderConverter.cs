@@ -56,17 +56,27 @@ namespace AssetStudio
                 throw new Exception("Invalid SMOL-V shader header");
             }
 
-            // Save decoded stream to another unique file
-            string filename = $"decoded_stream_{Guid.NewGuid()}.smolv-bin";
-            SaveStreamToFile(stream, size, filename);
+            // Create the folder for decoded files
+            string outputDirectory = Path.Combine(Directory.GetCurrentDirectory(), "ExPORTEDShaders");
+            if (!Directory.Exists(outputDirectory))
+            {
+                Directory.CreateDirectory(outputDirectory);
+            }
+
+
+            Guid fileid = Guid.NewGuid();
+            SaveStreamToFile(stream, size, Path.Combine(outputDirectory, $"decoded_stream_{fileid}.smolv-bin"));
             
             using (var decodedStream = new MemoryStream(new byte[decodedSize]))
             {
                 if (SmolvDecoder.Decode(stream, size, decodedStream))
                 {
+                    SaveStreamToFile(decodedStream, decodedSize, Path.Combine(outputDirectory, $"decoded_stream_{fileid}.spv"));
+
                     decodedStream.Position = 0;
                     var module = Module.ReadFrom(decodedStream);
                     var disassembler = new Disassembler();
+                  
                     return disassembler.Disassemble(module, DisassemblyOptions.Default).Replace("\r\n", "\n");
                 }
                 else
@@ -74,18 +84,20 @@ namespace AssetStudio
                     throw new Exception("Unable to decode SMOL-V shader");
                 }
             }
+
+
         }
 
         private static void SaveStreamToFile(Stream stream, int size, string fileName)
         {
-            long originalPosition = stream.Position; // Store the original position of the stream
+            long originalPosition = stream.Position; 
             using (var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
             {
                 byte[] buffer = new byte[size];
                 stream.Read(buffer, 0, size);
                 fileStream.Write(buffer, 0, buffer.Length);
             }
-            stream.Position = originalPosition; // Restore the original position of the stream
+            stream.Position = originalPosition;
         }
     }
 }
