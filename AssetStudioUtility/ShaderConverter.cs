@@ -11,6 +11,8 @@ namespace AssetStudio
 {
     public static class ShaderConverter
     {
+
+
         public static string Convert(this Shader shader)
         {
             if (shader.m_SubProgramBlob != null) //5.3 - 5.4
