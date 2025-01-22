@@ -1,13 +1,11 @@
-using AssetStudio;
+﻿using AssetStudio;
 using System;
 using System.IO;
 
-
-namespace AssetStudioGUI
+namespace AssetStudio
 {
     static class Program
     {
-
 
         static void Main(string[] args)
         {
@@ -25,7 +23,7 @@ namespace AssetStudioGUI
                     if (asset is Shader shader)
                     {
                         ShaderConverter.Convert(shader);
-                        Console.WriteLine("Clap you hands");
+                        Console.WriteLine("Asset converted.");
                     }
                 }
             }
