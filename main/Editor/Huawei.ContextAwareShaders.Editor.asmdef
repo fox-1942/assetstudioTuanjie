@@ -1,0 +1,6 @@
+{
+	"name": "Huawei.ContextAwareShaders.Editor",
+	"includePlatforms": [
+        "Editor"
+    ]
+}

@@ -1,4 +1,4 @@
-﻿using AssetStudio;
+﻿/*using AssetStudio;
 using System;
 using System.IO;
 
@@ -23,10 +23,10 @@ namespace AssetStudio
                     if (asset is Shader shader)
                     {
                         ShaderConverter.Convert(shader);
-                        Console.WriteLine("Asset converted.");
+                        Console.WriteLine("- Asset converted.");
                     }
                 }
             }
         }
     }
-}
+}*/
