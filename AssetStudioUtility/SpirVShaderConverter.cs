@@ -55,6 +55,11 @@ namespace AssetStudio
             {
                 throw new Exception("Invalid SMOL-V shader header");
             }
+
+            // Save decoded stream to another unique file
+            string filename = $"decoded_stream_{Guid.NewGuid()}.smolv-bin";
+            SaveStreamToFile(stream, size, filename);
+            
             using (var decodedStream = new MemoryStream(new byte[decodedSize]))
             {
                 if (SmolvDecoder.Decode(stream, size, decodedStream))
@@ -69,6 +74,18 @@ namespace AssetStudio
                     throw new Exception("Unable to decode SMOL-V shader");
                 }
             }
+        }
+
+        private static void SaveStreamToFile(Stream stream, int size, string fileName)
+        {
+            long originalPosition = stream.Position; // Store the original position of the stream
+            using (var fileStream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                byte[] buffer = new byte[size];
+                stream.Read(buffer, 0, size);
+                fileStream.Write(buffer, 0, buffer.Length);
+            }
+            stream.Position = originalPosition; // Restore the original position of the stream
         }
     }
 }
